@@ -9,7 +9,7 @@ import { StarIcon } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import Image from "next/image";
 
-const ProductDetailPage = ({ open, setOpen, product }) => {
+const ProductDetailPage = ({ open, setOpen, product, addToCart }) => {
   const [selectedImage, setSelectedImage] = useState(null);
 
   useEffect(() => {
@@ -81,7 +81,9 @@ const ProductDetailPage = ({ open, setOpen, product }) => {
 
           {/* Add to Cart Button */}
           <div className="mt-5">
-            <Button className="w-full">Add to Cart</Button>
+            <Button className="w-full" onClick={() => addToCart(product)}>
+              Add to Cart
+            </Button>
           </div>
 
           <Separator className="my-6" />

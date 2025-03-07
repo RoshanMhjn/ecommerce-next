@@ -1,26 +1,25 @@
+// components/shop/Navbar.js
 "use client";
 
 import Link from "next/link";
 import { useState, useEffect } from "react";
-import {
-  ShoppingCart,
-  User,
-  Menu,
-  X,
-  SearchCheckIcon,
-  Search,
-} from "lucide-react";
-import { Input } from "../ui/input";
-import { Button } from "../ui/button";
+import { User, Menu, X, Search } from "lucide-react";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-} from "../ui/dropdown-menu";
-import { Card } from "../ui/card";
+} from "@/components/ui/dropdown-menu";
+import { Card } from "@/components/ui/card";
+import Cart from "@/components/shop/cart";
 
-export const Navbar = () => {
+export const Navbar = ({
+  cart = [],
+  removeFromCart = () => {},
+  updateQuantity = () => {},
+}) => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [mounted, setMounted] = useState(false);
 
@@ -29,7 +28,7 @@ export const Navbar = () => {
   }, []);
 
   return (
-    <nav className="bg-white p-4 px-6 lg:px-40 fixed w-full top-0 z-50 border-b-2">
+    <nav className="bg-white p-4 px-6 lg:px-40 fixed w-[100vw] top-0 z-50 border-b-2">
       <div className="container mx-auto flex items-center justify-between">
         {/* Logo */}
         <Link href="/" className="text-2xl font-bold">
@@ -49,18 +48,21 @@ export const Navbar = () => {
               <DropdownMenuTrigger className="hover:text-gray-600">
                 Categories
               </DropdownMenuTrigger>
-              <DropdownMenuContent align="start" className="mt-2" forceMount>
-                <Card className="p-4 w-48">
-                  <DropdownMenuItem>
-                    <Link href="/categories/bags">Bags</Link>
-                  </DropdownMenuItem>
-                  <DropdownMenuItem>
-                    <Link href="/categories/accessories">Accessories</Link>
-                  </DropdownMenuItem>
-                  <DropdownMenuItem>
-                    <Link href="/categories/new">New Arrivals</Link>
-                  </DropdownMenuItem>
-                </Card>
+              <DropdownMenuContent
+                align="start"
+                side="bottom"
+                className="absolute left-0 w-48"
+                forceMount
+              >
+                <DropdownMenuItem>
+                  <Link href="/categories/bags">Bags</Link>
+                </DropdownMenuItem>
+                <DropdownMenuItem>
+                  <Link href="/categories/accessories">Accessories</Link>
+                </DropdownMenuItem>
+                <DropdownMenuItem>
+                  <Link href="/categories/new">New Arrivals</Link>
+                </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
           )}
@@ -71,21 +73,18 @@ export const Navbar = () => {
 
         {/* Search Bar */}
         <div className="hidden md:flex items-center space-x-2">
-          <Input
-            type="text"
-            placeholder="Search..."
-            className="w-30 lg:w-60"
-          ></Input>
-
+          <Input type="text" placeholder="Search..." className="w-30 lg:w-60" />
           <Search />
         </div>
 
-        {/* Icons  */}
+        {/* Icons */}
         <div className="flex items-center space-x-4">
-          {/* Cart Icon */}
-          <Link href="/cart" className="relative">
-            <ShoppingCart className="w-6 h-6" />
-          </Link>
+          {/* Cart Component */}
+          <Cart
+            cartItems={cart}
+            removeFromCart={removeFromCart}
+            updateQuantity={updateQuantity}
+          />
 
           {/* Profile Dropdown */}
           {mounted && (
@@ -93,7 +92,7 @@ export const Navbar = () => {
               <DropdownMenuTrigger>
                 <User className="w-6 h-6 cursor-pointer" />
               </DropdownMenuTrigger>
-              <DropdownMenuContent align="end" className="mt-2" forceMount>
+              <DropdownMenuContent align="end" className="mt-2 w-48" forceMount>
                 <DropdownMenuItem>
                   <Link href="/profile">Profile</Link>
                 </DropdownMenuItem>
@@ -131,15 +130,12 @@ export const Navbar = () => {
             </button>
           </div>
           <div className="space-y-6">
-            {/* Mobile Search Bar */}
             <div className="flex items-center space-x-2">
               <Input type="text" placeholder="Search..." className="w-full" />
               <Button variant="outline">
                 <Search />
               </Button>
             </div>
-
-            {/* Mobile Navigation Links */}
             <div className="flex flex-col space-y-4">
               <Link
                 href="/"
@@ -155,7 +151,6 @@ export const Navbar = () => {
               >
                 Store
               </Link>
-
               <Link
                 href="/categories/new"
                 className="text-lg hover:text-gray-600"
