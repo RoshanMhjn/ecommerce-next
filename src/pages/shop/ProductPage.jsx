@@ -1,4 +1,3 @@
-// pages/shop/ProductsPage.js
 "use client";
 
 import { useState, useEffect } from "react";
@@ -90,7 +89,7 @@ export default function ProductPage() {
         updateQuantity={updateQuantity}
         setOpenCartSheet={(isOpen) =>
           console.log("Cart sheet toggled:", isOpen)
-        } // Optional
+        }
       />
       <div className="container mx-auto p-6 lg:px-40 mt-20">
         <h1 className="text-3xl font-bold mb-6 text-center">Our Products</h1>
@@ -98,15 +97,27 @@ export default function ProductPage() {
           {currentProducts.map((product) => (
             <Card
               key={product.id}
-              className="p-4 flex justify-between rounded-none flex-col"
+              className="p-4 flex justify-between rounded-none flex-col relative"
             >
-              <div className="relative w-full h-64">
+              <div className="relative w-full h-40">
                 <Image
                   src={product.image}
                   alt={product.title}
                   layout="fill"
                   objectFit="contain"
                 />
+                <button
+                  onClick={() => toggleFavorite(product)}
+                  className="absolute top-2 right-2 p-1 rounded-full"
+                >
+                  <Heart
+                    className={`w-6 h-6 ${
+                      favorites.includes(product.id)
+                        ? "text-red-500"
+                        : "text-black"
+                    }`}
+                  />
+                </button>
               </div>
               <h2 className="font-semibold">{product.title}</h2>
               <p className="text-gray-600 text-sm">${product.price}</p>
@@ -125,15 +136,6 @@ export default function ProductPage() {
                 >
                   <ShoppingCart className="w-4 h-4 mr-2" /> Add to Cart
                 </Button>
-                <button onClick={() => toggleFavorite(product)}>
-                  <Heart
-                    className={`w-6 h-6 ${
-                      favorites.includes(product.id)
-                        ? "text-red-500"
-                        : "text-gray-400"
-                    }`}
-                  />
-                </button>
               </div>
             </Card>
           ))}

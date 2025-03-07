@@ -41,7 +41,7 @@ const ProductDetailPage = ({ open, setOpen, product, addToCart }) => {
                 alt={product.title}
                 width={600}
                 height={600}
-                className="aspect-square w-full object-cover transition-all duration-300"
+                className="aspect-square  object-cover h-90"
               />
             )}
           </div>
