@@ -3,17 +3,29 @@
 
 import Link from "next/link";
 import { useState, useEffect } from "react";
-import { User, Menu, X, Search } from "lucide-react";
+import {
+  User,
+  Menu,
+  X,
+  Search,
+  User2Icon,
+  SquareUserRound,
+  LogOut,
+} from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Card } from "@/components/ui/card";
 import Cart from "@/components/shop/cart";
+import { Separator } from "../ui/separator";
+import { Avatar, AvatarFallback } from "../ui/avatar";
 
 export const Navbar = ({
   cart = [],
@@ -89,18 +101,28 @@ export const Navbar = ({
           {/* Profile Dropdown */}
           {mounted && (
             <DropdownMenu>
-              <DropdownMenuTrigger>
-                <User className="w-6 h-6 cursor-pointer" />
+              <DropdownMenuTrigger asChild>
+                <Avatar className="bg-black">
+                  <AvatarFallback className="bg-black text-white font-bold">
+                    U
+                  </AvatarFallback>
+                </Avatar>
               </DropdownMenuTrigger>
-              <DropdownMenuContent align="end" className="mt-2 w-48" forceMount>
+              <DropdownMenuContent side="right" className="w-56" forceMount>
+                <DropdownMenuLabel>Logged in as user</DropdownMenuLabel>
+                <DropdownMenuSeparator />
                 <DropdownMenuItem>
-                  <Link href="/profile">Profile</Link>
+                  <Link href="/shop/account" className="flex items-center">
+                    <SquareUserRound className="mr-2 h-4 w-4" />
+                    Account
+                  </Link>
                 </DropdownMenuItem>
+                <DropdownMenuSeparator />
                 <DropdownMenuItem>
-                  <Link href="/orders">Orders</Link>
-                </DropdownMenuItem>
-                <DropdownMenuItem>
-                  <Link href="/auth/login">Login</Link>
+                  <Link href="/auth/login" className="flex items-center">
+                    <LogOut className="mr-2 h-4 w-4" />
+                    Login
+                  </Link>
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
@@ -118,7 +140,7 @@ export const Navbar = ({
 
       {/* Mobile Menu */}
       <div
-        className={`fixed inset-y-0 right-0 w-64 bg-white shadow-lg transform transition-transform duration-300 ease-in-out z-50 md:hidden ${
+        className={`fixed inset-y-0 right-0 w-64 bg-white transform transition-transform duration-300 ease-in-out z-50 md:hidden ${
           isMobileMenuOpen ? "translate-x-0" : "translate-x-full"
         }`}
       >

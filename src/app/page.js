@@ -1,3 +1,4 @@
+import FAQSection from "@/components/shop/FAQsection";
 import Hero from "@/components/shop/Hero";
 import { Navbar } from "@/components/shop/Navbar";
 import { Toaster } from "@/components/ui/sonner";
@@ -11,6 +12,7 @@ export default function Home() {
       <Hero />
       <AboutUs />
       <ProductsPage />
+      <FAQSection />
       <Toaster />
     </div>
   );
