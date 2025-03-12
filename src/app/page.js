@@ -1,3 +1,4 @@
+import Category from "@/pages/shop/[category]";
 import FAQSection from "@/components/shop/FAQsection";
 import Hero from "@/components/shop/Hero";
 import { Navbar } from "@/components/shop/Navbar";
