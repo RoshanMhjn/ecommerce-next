@@ -1,17 +1,8 @@
-// components/shop/Navbar.js
 "use client";
 
 import Link from "next/link";
 import { useState, useEffect } from "react";
-import {
-  User,
-  Menu,
-  X,
-  Search,
-  User2Icon,
-  SquareUserRound,
-  LogOut,
-} from "lucide-react";
+import { Menu, X, Search, SquareUserRound, LogOut } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import {
@@ -55,29 +46,10 @@ export const Navbar = ({
           <Link href="/store" className="hover:text-gray-600">
             Store
           </Link>
-          {mounted && (
-            <DropdownMenu>
-              <DropdownMenuTrigger className="hover:text-gray-600">
-                Categories
-              </DropdownMenuTrigger>
-              <DropdownMenuContent
-                align="start"
-                side="bottom"
-                className="absolute left-0 w-48"
-                forceMount
-              >
-                <DropdownMenuItem>
-                  <Link href="/categories/bags">Bags</Link>
-                </DropdownMenuItem>
-                <DropdownMenuItem>
-                  <Link href="/categories/accessories">Accessories</Link>
-                </DropdownMenuItem>
-                <DropdownMenuItem>
-                  <Link href="/categories/new">New Arrivals</Link>
-                </DropdownMenuItem>
-              </DropdownMenuContent>
-            </DropdownMenu>
-          )}
+          <Link href="/shop/category" className="hover:text-gray-600">
+            Category
+          </Link>
+
           <Link href="/blogs" className="hover:text-gray-600">
             Blogs
           </Link>

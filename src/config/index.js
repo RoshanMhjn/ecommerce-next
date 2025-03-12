@@ -127,3 +127,25 @@ export const addressFormControls = [
     placeholder: "Enter any additional notes",
   },
 ];
+
+export const filterOptions = {
+  category: [
+    { id: "category1", label: "Category 1" },
+    { id: "category2", label: "Category 2" },
+    { id: "category3", label: "Category 3" },
+    { id: "category4", label: "Category 4" },
+    { id: "category5", label: "Category 5" },
+  ],
+  material: [
+    { id: "material1", label: "Material 1" },
+    { id: "material2", label: "Material 2" },
+    { id: "material3", label: "Material 3" },
+  ],
+};
+
+export const sortOptions = [
+  { id: "price-lowtohigh", label: "Price: Low to High" },
+  { id: "price-hightolow", label: "Price: High to Low" },
+  { id: "title-atoz", label: "Title: A to Z" },
+  { id: "title-ztoa", label: "Title: Z to A" },
+];
