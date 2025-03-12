@@ -24,17 +24,17 @@ const AboutUs = () => {
               Created forth two. Behold appear first, kind all i saying fowl man
               itself moved which every open shall moved subdue appear. Saying
               life wherein stars. Give dry, own, male had that us third lesser
-              over deep. May every bring in it Whose. Female earth heaven won't
+              over deep. May every bring in it Whose. Female earth heaven wont
               behold female.
             </p>
             <p className="text-base leading-7 opacity-70 mt-6 mb-0">
-              Moved bearing give a two after. Had. Seas. Man they're. Grass
-              above kind saying thing for that void sixth fly His after it.
+              Moved bearing give a two after. Had. Seas. Man theyre. Grass above
+              kind saying thing for that void sixth fly His after it.
             </p>
             <p className="text-base leading-7 opacity-70 mt-6 mb-0">
-              The set doesn't moved. Deep don't fruit fowl gathering heaven days
+              The set doesnt moved. Deep dont fruit fowl gathering heaven days
               moving creeping under from i air. Set it fifth Meat wasness. every
-              bring in it Whose. Female earth heaven won't behold female.
+              bring in it Whose. Female earth heaven wont behold female.
             </p>
           </div>
         </div>
