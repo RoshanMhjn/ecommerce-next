@@ -1,5 +1,6 @@
 "use client";
 
+import Footer from "@/components/common/Footer";
 import { Navbar } from "@/components/shop/Navbar";
 import ProfileEdit from "@/components/shop/ProfileEdit";
 import ShopAddress from "@/components/shop/ShopAddress";

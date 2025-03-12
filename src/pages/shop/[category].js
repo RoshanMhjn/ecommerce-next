@@ -18,6 +18,7 @@ import Image from "next/image";
 import ProductDetailPage from "@/pages/shop/ProductDetailPage";
 import { toast } from "sonner";
 import { Navbar } from "@/components/shop/Navbar";
+import Footer from "@/components/common/Footer";
 
 const Category = () => {
   const [products, setProducts] = useState([]);
@@ -236,6 +237,7 @@ const Category = () => {
           addToCart={addToCart}
         />
       </div>
+      <Footer />
     </>
   );
 };

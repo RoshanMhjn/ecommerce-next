@@ -149,3 +149,53 @@ export const sortOptions = [
   { id: "title-atoz", label: "Title: A to Z" },
   { id: "title-ztoa", label: "Title: Z to A" },
 ];
+
+export const blogs = [
+  {
+    title: "Not Your Regular Home Decoration?",
+    description:
+      "Assumenda non repellendus distinctio nihil dicta sapiente, quibusdam maiores.",
+    author: " John Leo",
+    date: "21 Jun, 2022",
+    image: "https://cdn.easyfrontend.com/pictures/blog/blog_1.jpg",
+  },
+  {
+    title: "Long lasting fall scent for women sale offer",
+    description: "It’s no secret that the digital industry is booming. ",
+    author: " Abraham Frin",
+    date: "21 Jun, 2022",
+    image: "https://cdn.easyfrontend.com/pictures/blog/blog_2.jpg",
+  },
+  {
+    title: "How I’m Styling Everyday Black Outfits",
+    description:
+      "Viverra tellus in hac habitasse platea dictumst. Sollicitudin tempor id eu nisl.",
+    author: " Finn Alen",
+    date: "21 Jun, 2022",
+    image: "https://cdn.easyfrontend.com/pictures/blog/blog_3.jpg",
+  },
+  {
+    title: "Fashion Essentials All Men Should Know",
+    description:
+      "Sed ut in perspiciatis unde omnis iste natus error sit tatem doloremque laudantium.",
+    author: " Warner Mac",
+    date: "21 Jun, 2022",
+    image: "https://cdn.easyfrontend.com/pictures/blog/blog_4.jpg",
+  },
+  {
+    title: "Dolor sit amet, consectetur adiplscing eliyt sed",
+    description:
+      "More off this less hello salamander lied porpoise much over tightly circa horse taped.",
+    author: " Maxy Paulo",
+    date: "21 Jun, 2022",
+    image: "https://cdn.easyfrontend.com/pictures/blog/blog_13_3.jpg",
+  },
+  {
+    title: "Not Your Regular Home Decoration?",
+    description:
+      "Urna molestie at eleme ntum eu facilisis sed odio Male suada fames .",
+    author: " Sarah Taylor",
+    date: "21 Jun, 2022",
+    image: "https://cdn.easyfrontend.com/pictures/blog/blog_13_1.jpg",
+  },
+];

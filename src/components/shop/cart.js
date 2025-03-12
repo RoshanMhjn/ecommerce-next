@@ -12,6 +12,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { ShoppingCart } from "lucide-react";
 import CartContents from "./CartContents";
+import Link from "next/link";
 
 export default function Cart({
   cartItems,
@@ -78,13 +79,10 @@ export default function Cart({
               </span>
             </div>
             <Button
-              onClick={() => {
-                setOpen(false);
-                if (setOpenCartSheet) setOpenCartSheet(false);
-              }}
+              onClick={() => {}}
               className="w-full bg-gray-900 hover:bg-gray-800 text-white uppercase"
             >
-              Checkout
+              <Link href="/shop/checkout">Checkout</Link>
             </Button>
           </div>
         )}

@@ -49,10 +49,6 @@ export const Navbar = ({
           <Link href="/shop/category" className="hover:text-gray-600">
             Category
           </Link>
-
-          <Link href="/blogs" className="hover:text-gray-600">
-            Blogs
-          </Link>
         </div>
 
         {/* Search Bar */}
