@@ -142,18 +142,11 @@ export const Navbar = ({
                 Store
               </Link>
               <Link
-                href="/categories/new"
+                href="/shop/category"
                 className="text-lg hover:text-gray-600"
                 onClick={() => setIsMobileMenuOpen(false)}
               >
-                New Arrivals
-              </Link>
-              <Link
-                href="/blogs"
-                className="text-lg hover:text-gray-600"
-                onClick={() => setIsMobileMenuOpen(false)}
-              >
-                Blogs
+                Category
               </Link>
             </div>
           </div>
