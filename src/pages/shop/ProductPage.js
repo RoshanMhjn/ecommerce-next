@@ -5,6 +5,7 @@ import Image from "next/image";
 import { ShoppingCart, Heart } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
+import { Skeleton } from "@/components/ui/skeleton";
 import { Navbar } from "@/components/shop/Navbar";
 import ProductDetailPage from "./ProductDetailPage";
 import { toast } from "sonner";
@@ -16,16 +17,20 @@ export default function ProductPage() {
   const [currentPage, setCurrentPage] = useState(1);
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const productsPerPage = 6;
 
   useEffect(() => {
     const fetchProducts = async () => {
       try {
+        setIsLoading(true);
         const res = await fetch("https://fakestoreapi.com/products");
         const data = await res.json();
         setProducts(data);
       } catch (error) {
         console.error("Error fetching products:", error);
+      } finally {
+        setIsLoading(false);
       }
     };
     fetchProducts();
@@ -91,55 +96,68 @@ export default function ProductPage() {
           console.log("Cart sheet toggled:", isOpen)
         }
       />
+
       <div className="container mx-auto p-6 lg:px-40 mt-20">
         <h1 className="text-3xl font-bold mb-6 text-center">Our Products</h1>
+
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
-          {currentProducts.map((product) => (
-            <Card
-              key={product.id}
-              className="p-4 flex justify-between rounded-none flex-col relative"
-            >
-              <div className="relative w-full h-40">
-                <Image
-                  src={product.image}
-                  alt={product.title}
-                  layout="fill"
-                  objectFit="contain"
-                />
-                <button
-                  onClick={() => toggleFavorite(product)}
-                  className="absolute top-2 right-2 p-1 rounded-full"
+          {isLoading
+            ? Array.from({ length: productsPerPage }).map((_, index) => (
+                <Card key={index} className="p-4 space-y-3">
+                  <Skeleton className="h-40 w-full" />
+                  <Skeleton className="h-5 w-3/4" />
+                  <Skeleton className="h-4 w-1/2" />
+                  <Skeleton className="h-8 w-full" />
+                  <Skeleton className="h-8 w-full" />
+                </Card>
+              ))
+            : currentProducts.map((product) => (
+                <Card
+                  key={product.id}
+                  className="p-4 flex justify-between rounded-none flex-col relative"
                 >
-                  <Heart
-                    className={`w-6 h-6 ${
-                      favorites.includes(product.id)
-                        ? "text-red-500"
-                        : "text-black"
-                    }`}
-                  />
-                </button>
-              </div>
-              <h2 className="font-semibold">{product.title}</h2>
-              <p className="text-gray-600 text-sm">${product.price}</p>
-              <div className="flex justify-between items-center flex-col gap-4 lg:gap-3">
-                <Button
-                  className="w-full"
-                  onClick={() => handleOpenModal(product)}
-                >
-                  View Details
-                </Button>
-                <Button
-                  variant="outline"
-                  size="sm"
-                  className="w-full"
-                  onClick={() => addToCart(product)}
-                >
-                  <ShoppingCart className="w-4 h-4 mr-2" /> Add to Cart
-                </Button>
-              </div>
-            </Card>
-          ))}
+                  <div className="relative w-full h-40">
+                    <Image
+                      src={product.image}
+                      alt={product.title}
+                      layout="fill"
+                      objectFit="contain"
+                    />
+                    <button
+                      onClick={() => toggleFavorite(product)}
+                      className="absolute top-2 right-2 p-1 rounded-full"
+                    >
+                      <Heart
+                        className={`w-6 h-6 ${
+                          favorites.includes(product.id)
+                            ? "text-red-500"
+                            : "text-black"
+                        }`}
+                      />
+                    </button>
+                  </div>
+                  <h2 className="font-semibold">{product.title}</h2>
+                  <p className="text-gray-600 text-sm">${product.price}</p>
+                  <div className="flex justify-between items-center flex-col gap-4 lg:gap-3">
+                    <Button
+                      className="w-full"
+                      onClick={() => handleOpenModal(product)}
+                    >
+                      View Details
+                    </Button>
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      className="w-full"
+                      onClick={() => addToCart(product)}
+                    >
+                      <ShoppingCart className="w-4 h-4 mr-2" /> Add to Cart
+                    </Button>
+                  </div>
+                </Card>
+              ))}
         </div>
+
         {totalPages > 1 && (
           <div className="flex justify-center items-center mt-6 space-x-4">
             <Button
@@ -161,6 +179,7 @@ export default function ProductPage() {
             </Button>
           </div>
         )}
+
         <ProductDetailPage
           open={isModalOpen}
           setOpen={setIsModalOpen}

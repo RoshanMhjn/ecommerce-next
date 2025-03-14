@@ -1,9 +1,8 @@
 "use client";
 
-import { sortOptions } from "@/config";
-import { useRouter, useSearchParams } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useState, useEffect } from "react";
 import ShopFilter from "../../components/shop/ShopFilter";
+import { sortOptions } from "@/config";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -14,9 +13,8 @@ import {
 import { Button } from "../../components/ui/button";
 import { ArrowUpDownIcon, Heart, ShoppingCart } from "lucide-react";
 import { Card } from "../../components/ui/card";
+import { Skeleton } from "../../components/ui/skeleton";
 import Image from "next/image";
-import ProductDetailPage from "@/pages/shop/ProductDetailPage";
-import { toast } from "sonner";
 import { Navbar } from "@/components/shop/Navbar";
 import Footer from "@/components/common/Footer";
 
@@ -24,14 +22,9 @@ const Category = () => {
   const [products, setProducts] = useState([]);
   const [filteredProducts, setFilteredProducts] = useState([]);
   const [filters, setFilters] = useState({});
-  const [cart, setCart] = useState([]);
-  const [favorites, setFavorites] = useState([]);
-  const [currentPage, setCurrentPage] = useState(1);
-  const [selectedProduct, setSelectedProduct] = useState(null);
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [priceRange, setPriceRange] = useState([0, 1000]);
   const [sort, setSort] = useState("price-lowtohigh");
-  const router = useRouter();
-  const searchParams = useSearchParams();
+  const [isLoading, setIsLoading] = useState(true);
 
   const handleFilter = (sectionId, optionId) => {
     const updatedFilters = { ...filters };
@@ -47,52 +40,7 @@ const Category = () => {
         updatedFilters[sectionId].push(optionId);
       }
     }
-
     setFilters(updatedFilters);
-    sessionStorage.setItem("filters", JSON.stringify(updatedFilters));
-  };
-
-  const addToCart = (product) => {
-    setCart((prevCart) => {
-      const existingItem = prevCart.find((item) => item.id === product.id);
-      if (existingItem) {
-        return prevCart.map((item) =>
-          item.id === product.id
-            ? { ...item, quantity: item.quantity + 1 }
-            : item
-        );
-      }
-
-      return [...prevCart, { ...product, quantity: 1 }];
-    });
-    toast("Item added to cart.");
-  };
-
-  const removeFromCart = (id) => {
-    setCart((prevCart) => prevCart.filter((item) => item.id !== id));
-    toast("Item removed from cart.");
-  };
-
-  const updateQuantity = (id, quantity) => {
-    setCart((prevCart) =>
-      prevCart.map((item) =>
-        item.id === id ? { ...item, quantity: Math.max(1, quantity) } : item
-      )
-    );
-    toast("Item updated.");
-  };
-
-  const handleOpenModal = (product) => {
-    setSelectedProduct(product);
-    setIsModalOpen(true);
-  };
-
-  const toggleFavorite = (product) => {
-    setFavorites((prev) =>
-      prev.includes(product.id)
-        ? prev.filter((id) => id !== product.id)
-        : [...prev, product.id]
-    );
   };
 
   const handleSort = (value) => {
@@ -110,6 +58,11 @@ const Category = () => {
       });
     }
 
+    tempProducts = tempProducts.filter(
+      (product) =>
+        product.price >= priceRange[0] && product.price <= priceRange[1]
+    );
+
     if (sort === "price-lowtohigh") {
       tempProducts.sort((a, b) => a.price - b.price);
     } else if (sort === "price-hightolow") {
@@ -121,35 +74,39 @@ const Category = () => {
     }
 
     setFilteredProducts(tempProducts);
-  }, [products, filters, sort]);
+  }, [products, filters, sort, priceRange]);
 
   useEffect(() => {
     const fetchProducts = async () => {
-      try {
-        const res = await fetch("https://fakestoreapi.com/products");
-        const data = await res.json();
-        setProducts(data);
-      } catch (error) {
-        console.error("Error fetching products:", error);
-      }
+      setIsLoading(true);
+      const res = await fetch("https://fakestoreapi.com/products");
+      const data = await res.json();
+      setProducts(data);
+      setIsLoading(false);
     };
 
     fetchProducts();
-    setFilters(JSON.parse(sessionStorage.getItem("filters")) || {});
   }, []);
 
   return (
     <>
       <Navbar className="mb-4" />
       <div className="grid grid-cols-1 md:grid-cols-[200px_1fr] gap-6 p-4 md:p-6 mt-20">
-        <ShopFilter filters={filters} handleFilter={handleFilter} />
+        <ShopFilter
+          filters={filters}
+          handleFilter={handleFilter}
+          priceRange={priceRange}
+          setPriceRange={setPriceRange}
+        />
 
         <div className="bg-background w-full rounded-lg shadow-sm">
           <div className="p-4 border-b flex items-center justify-between">
             <h2 className="text-lg font-extrabold">All Products</h2>
             <div className="flex items-center gap-3">
               <span className="text-muted-foreground">
-                {filteredProducts.length} Products
+                {isLoading
+                  ? "Loading..."
+                  : `${filteredProducts.length} Products`}
               </span>
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
@@ -182,60 +139,37 @@ const Category = () => {
           </div>
 
           <div className="p-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-            {filteredProducts.map((product) => (
-              <Card
-                key={product.id}
-                className="p-4 flex justify-between rounded-none flex-col relative"
-              >
-                <div className="relative w-full h-40">
-                  <Image
-                    src={product.image}
-                    alt={product.title}
-                    layout="fill"
-                    objectFit="contain"
-                  />
-                  <button
-                    onClick={() => toggleFavorite(product)}
-                    className="absolute top-2 right-2 p-1 rounded-full"
+            {isLoading
+              ? Array.from({ length: 6 }).map((_, index) => (
+                  <Card key={index} className="p-4 rounded-none">
+                    <Skeleton className="w-full h-40 rounded-md" />
+                    <Skeleton className="h-4 w-3/4 mt-4" />
+                    <Skeleton className="h-4 w-1/2 mt-2" />
+                    <Skeleton className="h-8 w-full mt-4" />
+                  </Card>
+                ))
+              : filteredProducts.map((product) => (
+                  <Card
+                    key={product.id}
+                    className="p-4 flex justify-between flex-col relative"
                   >
-                    <Heart
-                      className={`w-6 h-6 ${
-                        favorites.includes(product.id)
-                          ? "text-red-500"
-                          : "text-black"
-                      }`}
-                    />
-                  </button>
-                </div>
-                <h2 className="font-semibold">{product.title}</h2>
-                <p className="text-gray-600 text-sm">${product.price}</p>
-                <div className="flex justify-between items-center flex-col gap-4 lg:gap-3">
-                  <Button
-                    className="w-full"
-                    onClick={() => handleOpenModal(product)}
-                  >
-                    View Details
-                  </Button>
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    className="w-full"
-                    onClick={() => addToCart(product)}
-                  >
-                    <ShoppingCart className="w-4 h-4 mr-2" /> Add to Cart
-                  </Button>
-                </div>
-              </Card>
-            ))}
+                    <div className="relative w-full h-40">
+                      <Image
+                        src={product.image}
+                        alt={product.title}
+                        layout="fill"
+                        objectFit="contain"
+                      />
+                    </div>
+                    <h2 className="font-semibold">{product.title}</h2>
+                    <p className="text-gray-600 text-sm">${product.price}</p>
+                    <Button variant="outline" size="sm" className="w-full">
+                      <ShoppingCart className="w-4 h-4 mr-2" /> Add to Cart
+                    </Button>
+                  </Card>
+                ))}
           </div>
         </div>
-
-        <ProductDetailPage
-          open={isModalOpen}
-          setOpen={setIsModalOpen}
-          product={selectedProduct}
-          addToCart={addToCart}
-        />
       </div>
       <Footer />
     </>

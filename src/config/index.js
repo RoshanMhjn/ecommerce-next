@@ -129,17 +129,30 @@ export const addressFormControls = [
 ];
 
 export const filterOptions = {
-  category: [
+  price: [
+    { id: "0-50", label: "$0 - $50" },
+    { id: "50.01-100", label: "$50 - $100" },
+    { id: "100.01-200", label: "$100 - $200" },
+    { id: "200.01-500", label: "$200 - $500" },
+    { id: "500.01-10000", label: "$500+" },
+  ],
+
+  Category: [
     { id: "category1", label: "Category 1" },
     { id: "category2", label: "Category 2" },
     { id: "category3", label: "Category 3" },
     { id: "category4", label: "Category 4" },
     { id: "category5", label: "Category 5" },
   ],
-  material: [
+  Material: [
     { id: "material1", label: "Material 1" },
     { id: "material2", label: "Material 2" },
     { id: "material3", label: "Material 3" },
+  ],
+  Tags: [
+    { id: "tag1", label: "Tag 1" },
+    { id: "tag2", label: "Tag 2" },
+    { id: "tag3", label: "Tag 3" },
   ],
 };
 
