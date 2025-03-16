@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button";
 import { Heart, ShoppingCart } from "lucide-react";
 import Slider from "react-slick";
 import { Skeleton } from "@/components/ui/skeleton";
+import Link from "next/link";
 
 export default function FeaturedProducts() {
   const [products, setProducts] = useState([]);
@@ -68,7 +69,7 @@ export default function FeaturedProducts() {
   };
 
   return (
-    <section className="container mx-auto px-4 lg:px-40 py-8 mt-10">
+    <section className="container mx-auto px-4 lg:px-40 py-8">
       <h2 className="text-2xl font-bold text-center mb-6">Featured Products</h2>
 
       {error && (
@@ -110,7 +111,9 @@ export default function FeaturedProducts() {
                 </h2>
                 <p className="text-gray-600 text-sm mb-4">${product.price}</p>
                 <div className="flex justify-between items-center flex-col gap-4 lg:gap-3">
-                  <Button className="w-full">View Details</Button>
+                  <Link href={`/products/${product.id}`} className="w-full">
+                    <Button className="w-full">View Details</Button>
+                  </Link>
                   <Button variant="outline" size="sm" className="w-full">
                     <ShoppingCart className="w-4 h-4 mr-2" /> Add to Cart
                   </Button>

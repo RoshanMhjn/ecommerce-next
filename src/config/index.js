@@ -138,8 +138,8 @@ export const filterOptions = {
   ],
 
   Category: [
-    { id: "category1", label: "Category 1" },
-    { id: "category2", label: "Category 2" },
+    { id: "men's clothing", label: "Category 1" },
+    { id: "jewelery", label: "Category 2" },
     { id: "category3", label: "Category 3" },
     { id: "category4", label: "Category 4" },
     { id: "category5", label: "Category 5" },
@@ -212,3 +212,29 @@ export const blogs = [
     image: "https://cdn.easyfrontend.com/pictures/blog/blog_13_1.jpg",
   },
 ];
+
+export const productTabs = [];
+
+export const deliveryOptions = {
+  freeShippingThreshold: 35,
+  returnPolicy: {
+    caption: "You have 60 days to return the product(s)",
+    options: [
+      {
+        type: "Standard Shipping",
+        duration: "5-7 Business Days",
+        cost: "Free (on orders over $35)",
+      },
+      {
+        type: "Express Shipping",
+        duration: "2-3 Business Days",
+        cost: "$5.99",
+      },
+      {
+        type: "Next-Day Delivery",
+        duration: "1 Business Day",
+        cost: "$15.99",
+      },
+    ],
+  },
+};

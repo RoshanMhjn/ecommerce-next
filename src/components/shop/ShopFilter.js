@@ -51,7 +51,6 @@ const ShopFilter = ({ filters, handleFilter, priceRange, setPriceRange }) => {
                       <Slider.Thumb className="block w-4 h-4 bg-primary border border-gray-300 rounded-full hover:bg-primary/80 focus:outline-none focus:ring-2 focus:ring-primary" />
                     </Slider.Root>
 
-                    {/* Price Labels and Inputs */}
                     <div className="flex justify-between items-center mt-4 gap-6 ">
                       <div className="flex flex-col w-1/2">
                         <label className="text-sm font-medium">Min Price</label>

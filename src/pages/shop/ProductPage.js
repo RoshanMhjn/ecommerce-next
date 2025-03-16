@@ -9,6 +9,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { Navbar } from "@/components/shop/Navbar";
 import ProductDetailPage from "./ProductDetailPage";
 import { toast } from "sonner";
+import Link from "next/link";
 
 export default function ProductPage() {
   const [products, setProducts] = useState([]);
@@ -66,11 +67,6 @@ export default function ProductPage() {
     toast("Item updated.");
   };
 
-  const handleOpenModal = (product) => {
-    setSelectedProduct(product);
-    setIsModalOpen(true);
-  };
-
   const toggleFavorite = (product) => {
     setFavorites((prev) =>
       prev.includes(product.id)
@@ -103,7 +99,7 @@ export default function ProductPage() {
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
           {isLoading
             ? Array.from({ length: productsPerPage }).map((_, index) => (
-                <Card key={index} className="p-4 space-y-3">
+                <Card key={index} className="p-4 space-y-3 rounded-none">
                   <Skeleton className="h-40 w-full" />
                   <Skeleton className="h-5 w-3/4" />
                   <Skeleton className="h-4 w-1/2" />
@@ -139,12 +135,9 @@ export default function ProductPage() {
                   <h2 className="font-semibold">{product.title}</h2>
                   <p className="text-gray-600 text-sm">${product.price}</p>
                   <div className="flex justify-between items-center flex-col gap-4 lg:gap-3">
-                    <Button
-                      className="w-full"
-                      onClick={() => handleOpenModal(product)}
-                    >
-                      View Details
-                    </Button>
+                    <Link href={`/products/${product.id}`} className="w-full">
+                      <Button className="w-full">View Details</Button>
+                    </Link>
                     <Button
                       variant="outline"
                       size="sm"
@@ -179,13 +172,6 @@ export default function ProductPage() {
             </Button>
           </div>
         )}
-
-        <ProductDetailPage
-          open={isModalOpen}
-          setOpen={setIsModalOpen}
-          product={selectedProduct}
-          addToCart={addToCart}
-        />
       </div>
     </div>
   );

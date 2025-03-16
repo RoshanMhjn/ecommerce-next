@@ -151,7 +151,7 @@ const Category = () => {
               : filteredProducts.map((product) => (
                   <Card
                     key={product.id}
-                    className="p-4 flex justify-between flex-col relative"
+                    className="p-4 flex justify-between rounded-none flex-col relative"
                   >
                     <div className="relative w-full h-40">
                       <Image
@@ -160,12 +160,31 @@ const Category = () => {
                         layout="fill"
                         objectFit="contain"
                       />
+                      <button
+                        onClick={() => toggleFavorite(product)}
+                        className="absolute top-2 right-2 p-1 rounded-full"
+                      >
+                        <Heart className="w-6 h-6 text-black" />
+                      </button>
                     </div>
                     <h2 className="font-semibold">{product.title}</h2>
                     <p className="text-gray-600 text-sm">${product.price}</p>
-                    <Button variant="outline" size="sm" className="w-full">
-                      <ShoppingCart className="w-4 h-4 mr-2" /> Add to Cart
-                    </Button>
+                    <div className="flex justify-between items-center flex-col gap-4 lg:gap-3">
+                      <Button
+                        className="w-full"
+                        onClick={() => handleOpenModal(product)}
+                      >
+                        View Details
+                      </Button>
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        className="w-full"
+                        onClick={() => addToCart(product)}
+                      >
+                        <ShoppingCart className="w-4 h-4 mr-2" /> Add to Cart
+                      </Button>
+                    </div>
                   </Card>
                 ))}
           </div>
